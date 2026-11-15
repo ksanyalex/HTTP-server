@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 #include <cstring>
+#include <stdexcept>
+#include <cstdlib>
 
 void test_defaults() {
     char* argv[] = {(char*)"server"};
