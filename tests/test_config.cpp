@@ -3,40 +3,40 @@
 #include <cassert>
 #include <cstring>
 
-void test_po_umnolchaniyu() {
+void test_defaults() {
     char* argv[] = {(char*)"server"};
     auto cfg = http_server::parse_config(1, argv);
 
     if (cfg.port != 8080) {
-        std::cerr << "Ошибка: порт по умолчанию должен быть 8080, а не "
+        std::cerr << "Error: default port should be 8080, got "
                   << cfg.port << std::endl;
         exit(1);
     }
     if (cfg.threads != 8) {
-        std::cerr << "Ошибка: число потоков по умолчанию должно быть 8, а не "
+        std::cerr << "Error: default threads should be 8, got "
                   << cfg.threads << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест значений по умолчанию пройден" << std::endl;
+    std::cout << "[OK] Default values test passed" << std::endl;
 }
 
-void test_svoi_znacheniya() {
+void test_custom_values() {
     char* argv[] = {(char*)"server", (char*)"--port", (char*)"9090",
                     (char*)"--threads", (char*)"4"};
     auto cfg = http_server::parse_config(5, argv);
 
     if (cfg.port != 9090) {
-        std::cerr << "Ошибка: порт должен быть 9090" << std::endl;
+        std::cerr << "Error: port should be 9090" << std::endl;
         exit(1);
     }
     if (cfg.threads != 4) {
-        std::cerr << "Ошибка: число потоков должно быть 4" << std::endl;
+        std::cerr << "Error: threads should be 4" << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест своих значений пройден" << std::endl;
+    std::cout << "[OK] Custom values test passed" << std::endl;
 }
 
-void test_neizvestny_flag() {
+void test_unknown_flag() {
     char* argv[] = {(char*)"server", (char*)"--foo"};
     bool caught = false;
     try {
@@ -45,14 +45,14 @@ void test_neizvestny_flag() {
         caught = true;
     }
     if (!caught) {
-        std::cerr << "Ошибка: должен был выбросить исключение на --foo"
+        std::cerr << "Error: should throw exception for --foo"
                   << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест неизвестного флага пройден" << std::endl;
+    std::cout << "[OK] Unknown flag test passed" << std::endl;
 }
 
-void test_flag_bez_znacheniya() {
+void test_missing_value() {
     char* argv[] = {(char*)"server", (char*)"--port"};
     bool caught = false;
     try {
@@ -61,14 +61,14 @@ void test_flag_bez_znacheniya() {
         caught = true;
     }
     if (!caught) {
-        std::cerr << "Ошибка: должен был выбросить исключение, "
-                     "если у флага нет значения" << std::endl;
+        std::cerr << "Error: should throw exception when flag "
+                     "has no value" << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест флага без значения пройден" << std::endl;
+    std::cout << "[OK] Missing value test passed" << std::endl;
 }
 
-void test_bolshoy_port() {
+void test_port_too_large() {
     char* argv[] = {(char*)"server", (char*)"--port", (char*)"70000"};
     bool caught = false;
     try {
@@ -77,13 +77,13 @@ void test_bolshoy_port() {
         caught = true;
     }
     if (!caught) {
-        std::cerr << "Ошибка: порт 70000 должен быть отклонён" << std::endl;
+        std::cerr << "Error: port 70000 should be rejected" << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест большого порта пройден" << std::endl;
+    std::cout << "[OK] Port too large test passed" << std::endl;
 }
 
-void test_nol_potokov() {
+void test_zero_threads() {
     char* argv[] = {(char*)"server", (char*)"--threads", (char*)"0"};
     bool caught = false;
     try {
@@ -92,22 +92,22 @@ void test_nol_potokov() {
         caught = true;
     }
     if (!caught) {
-        std::cerr << "Ошибка: 0 потоков должен быть отклонён" << std::endl;
+        std::cerr << "Error: 0 threads should be rejected" << std::endl;
         exit(1);
     }
-    std::cout << "[OK] Тест нуля потоков пройден" << std::endl;
+    std::cout << "[OK] Zero threads test passed" << std::endl;
 }
 
 int main() {
-    std::cout << "=== Запуск тестов конфигурации ===" << std::endl;
+    std::cout << "=== Running config tests ===" << std::endl;
 
-    test_po_umnolchaniyu();
-    test_svoi_znacheniya();
-    test_neizvestny_flag();
-    test_flag_bez_znacheniya();
-    test_bolshoy_port();
-    test_nol_potokov();
+    test_defaults();
+    test_custom_values();
+    test_unknown_flag();
+    test_missing_value();
+    test_port_too_large();
+    test_zero_threads();
 
-    std::cout << "=== Все тесты прошли успешно ===" << std::endl;
+    std::cout << "=== All tests passed ===" << std::endl;
     return 0;
 }
