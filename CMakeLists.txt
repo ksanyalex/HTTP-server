@@ -20,3 +20,14 @@ target_link_libraries(server PRIVATE Threads::Threads)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(server PRIVATE -Wall -Wextra -Wpedantic)
 endif()
+
+# Тесты конфигурации (Участник 2, Неделя 1)
+enable_testing()
+
+add_executable(test_config tests/test_config.cpp src/config.cpp)
+target_include_directories(test_config PRIVATE include)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(test_config PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_test(NAME test_config COMMAND test_config)
