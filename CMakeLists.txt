@@ -12,6 +12,7 @@ add_executable(server
     src/main.cpp
     src/config.cpp
     src/server.cpp
+    src/http_parser.cpp
 )
 
 target_include_directories(server PRIVATE include)
@@ -26,8 +27,23 @@ enable_testing()
 
 add_executable(test_config tests/test_config.cpp src/config.cpp)
 target_include_directories(test_config PRIVATE include)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(test_config PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 add_test(NAME test_config COMMAND test_config)
+
+# Тесты HTTP-парсера (Участник 1, Неделя 2)
+add_executable(test_http_parser
+    tests/test_http_parser.cpp
+    src/http_parser.cpp
+)
+
+target_include_directories(test_http_parser PRIVATE include)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(test_http_parser PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_test(NAME test_http_parser COMMAND test_http_parser)
