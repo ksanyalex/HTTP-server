@@ -6,7 +6,7 @@
 #include <string>
 #include <string_view>
 
-using namespace server;
+using namespace http_server;
 
 // Проверяем условие. Если оно ложное — тест не пройден.
 void check(bool condition, const char* message) {

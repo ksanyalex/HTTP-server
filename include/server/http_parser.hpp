@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-namespace server {
+namespace http_server {
 
 enum class ParseStatus {
     Incomplete,
@@ -64,4 +64,4 @@ private:
     std::string error_;
 };
 
-}  // namespace server
+}  // namespace http_server

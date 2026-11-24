@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace server {
+namespace http_server {
 
 struct HttpRequest {
     std::string method;
