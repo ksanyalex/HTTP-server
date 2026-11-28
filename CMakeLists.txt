@@ -13,6 +13,7 @@ add_executable(server
     src/config.cpp
     src/server.cpp
     src/http_parser.cpp
+    src/http_response.cpp
 )
 
 target_include_directories(server PRIVATE include)
@@ -47,3 +48,20 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 endif()
 
 add_test(NAME test_http_parser COMMAND test_http_parser)
+
+# HTTP Response tests (Week 2)
+add_executable(test_http_response
+    tests/test_http_response.cpp
+    src/http_response.cpp
+)
+
+target_include_directories(test_http_response PRIVATE include)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(test_http_response PRIVATE
+        -Wall -Wextra -Wpedantic
+    )
+endif()
+
+add_test(NAME test_http_response COMMAND test_http_response)
+

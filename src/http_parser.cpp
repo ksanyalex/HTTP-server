@@ -7,7 +7,7 @@
 #include <string_view>
 #include <utility>
 
-namespace server {
+namespace http_server {
 namespace {
 
 bool isTokenChar(char c) {
@@ -125,7 +125,7 @@ std::optional<std::string_view> HttpParser::readLine() {
     std::string_view line(buffer_.data() + cursor_, length);
 
     cursor_ = end + 2;
-    header_bytes_ += length + 2;
+    header_bytes_ += (length + 2);
 
     return line;
 }
@@ -387,4 +387,4 @@ void HttpParser::reset() {
     error_.clear();
 }
 
-}  // namespace server
+}  // namespace http_server
